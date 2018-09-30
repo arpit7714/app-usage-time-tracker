@@ -1,0 +1,10 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:shape="rectangle"
+    >
+
+    <corners android:radius="10dp" />
+
+    <!-- Make sure bottom and top padding match corner radius -->
+</shape>

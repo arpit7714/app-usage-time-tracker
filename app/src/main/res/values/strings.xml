@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">UsageStatsManager Sample</string>
+    <string name="permission_message">You need to grant access to usage stats\n GRANT PERMISSION</string>
+    <string name="last_time_used_never">Last time used: never</string>
+    <string name="last_time_used">Total time Used (today) %1$s</string>
+    <string name="total">%1$s</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

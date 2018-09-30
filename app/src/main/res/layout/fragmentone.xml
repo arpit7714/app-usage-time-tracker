@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@android:dimen/notification_large_icon_height"
+    android:id="@+id/h1"
+    android:orientation="vertical"
+    android:background="@android:color/holo_blue_dark"
+    >
+    <TextView
+        android:id="@+id/title_text"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:textSize="@dimen/activity_vertical_margin"
+        android:textColor="@android:color/white"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+     />
+
+</LinearLayout>
