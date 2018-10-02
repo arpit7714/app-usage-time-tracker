@@ -27,6 +27,8 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.quirodev.data.dbprovider;
+
 import java.util.List;
 
 import static android.view.View.GONE;
@@ -41,6 +43,7 @@ MainActivity extends AppCompatActivity implements UsageContract.View {
     private UsageContract.Presenter presenter;
     private UsageStatAdapter adapter;
     private TextView mSwitchText;
+    private dbprovider mdb;
 
     //this is used to show the average time smartphone used for today
     private long mtotal;
@@ -202,6 +205,11 @@ MainActivity extends AppCompatActivity implements UsageContract.View {
                 Log.v("size",String.valueOf(appItems.size()));
             for(AppItem1 item :appItems){
                     //Log.v("testing5",item.mPackageName+"event time"+item.mEventTime+"event type"+item.mEventType+"usage time"+item.mUsageTime);
+
+                //inserting appname and app time into the database
+                //if(item!=null)
+                  // mdb.insert(item);
+
                 if (item.mUsageTime <= 0) continue;
                 mTotal += item.mUsageTime;
             }
