@@ -28,5 +28,11 @@
         android:paddingTop="8dp"
         android:textSize="15sp"
         />
+    <TextView
+        android:id="@+id/database"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        />
 
 </RelativeLayout>

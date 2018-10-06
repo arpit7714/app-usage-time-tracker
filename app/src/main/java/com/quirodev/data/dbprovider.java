@@ -37,11 +37,10 @@ public class dbprovider {
     }
     public void insert(AppItem1 appitem){
 
-        if (!exist(appitem)){
+
           ContentValues values=itemToContentValue(appitem);
           mdbhelper.getWritableDatabase().insert(dbcontract.appdata.TABLE_NAME,null,values);
 
-        }
     }
     private ContentValues itemToContentValue(AppItem1 item) {
         ContentValues values = new ContentValues();

@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -207,9 +208,7 @@ MainActivity extends AppCompatActivity implements UsageContract.View {
                     //Log.v("testing5",item.mPackageName+"event time"+item.mEventTime+"event type"+item.mEventType+"usage time"+item.mUsageTime);
 
                 //inserting appname and app time into the database
-                if(item!=null)
                    mdb.insert(item);
-
                 if (item.mUsageTime <= 0) continue;
                 mTotal += item.mUsageTime;
             }
