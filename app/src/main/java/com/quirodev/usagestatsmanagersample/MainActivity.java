@@ -43,8 +43,8 @@ MainActivity extends AppCompatActivity implements UsageContract.View {
     private UsageContract.Presenter presenter;
     private UsageStatAdapter adapter;
     private TextView mSwitchText;
-    private dbprovider mdb;
-
+    private Context mContext;
+    public  dbprovider mdb;
     //this is used to show the average time smartphone used for today
     private long mtotal;
 
@@ -55,7 +55,7 @@ MainActivity extends AppCompatActivity implements UsageContract.View {
         mSwitchText= (TextView) findViewById(R.id.enable_text);
         //app transition animation
         // https://guides.codepath.com/android/Shared-Element-Activity-Transition
-
+        mdb=new dbprovider(getApplicationContext());
 
         //items for spinner
        /* String [] spinneritems={"Today","Yesterday","Weekly","Monthly"};
@@ -71,7 +71,7 @@ MainActivity extends AppCompatActivity implements UsageContract.View {
 
         //as we want to display our data as the linear vertical list , then this is the linear layout manager
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        //mdb=new dbprovider(mContext.);
         //divider decoration
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
         dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.divider, getTheme()));
@@ -208,7 +208,7 @@ MainActivity extends AppCompatActivity implements UsageContract.View {
 
                 //inserting appname and app time into the database
                 //if(item!=null)
-                  // mdb.insert(item);
+                   mdb.insert(item);
 
                 if (item.mUsageTime <= 0) continue;
                 mTotal += item.mUsageTime;

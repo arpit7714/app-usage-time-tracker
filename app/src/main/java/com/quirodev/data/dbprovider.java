@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.quirodev.usagestatsmanagersample.AppItem1;
 
@@ -17,16 +18,22 @@ import java.util.List;
 public class dbprovider {
 
     private static dbhelper mdbhelper;
-    private static dbcontract mdbcontract;
+    private static dbprovider instance;
 
 
     //we make the instance of the sqllitehllper class to
     //get the instance of the database and use mthod like
     //getwritabledatabase() and getreadabledatabase()
-
-    public static void dbprovider(Context context){
+    public  dbprovider(Context context){
         mdbhelper=new dbhelper(context);
-        mdbcontract=new dbcontract();
+    }
+
+    //public static dbprovider getinstance(){
+      //  return instance;
+    //}
+
+    public void method(){
+        Log.v("taking easy","yoiod");
     }
     public void insert(AppItem1 appitem){
 

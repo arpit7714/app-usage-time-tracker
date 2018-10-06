@@ -12,16 +12,23 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.quirodev.data.dbprovider;
+
+
 public class appitemdisplay extends AppCompatActivity{
     public static final String abc="App_name";
     public static String appname1;
     public static String pkname1;
     public static String usagetime1;
     public String pkname;
+    //to access database
+    public static dbprovider obj;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_display);
+        obj=new dbprovider(getApplicationContext());
         Intent intent=getIntent();
         if (intent!=null){
             appname1=intent.getStringExtra(abc);
