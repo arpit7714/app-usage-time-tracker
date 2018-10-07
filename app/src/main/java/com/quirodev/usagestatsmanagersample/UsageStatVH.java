@@ -1,14 +1,17 @@
 package com.quirodev.usagestatsmanagersample;
 
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,7 +35,7 @@ public class UsageStatVH extends RecyclerView.ViewHolder {
 
     }
 
-    public void bindTo(AppItem1 usageStatsWrapper) {
+    public void bindTo(Activity context, AppItem1 usageStatsWrapper) {
         appIcon.setImageDrawable(usageStatsWrapper.appicon);
         appName.setText(usageStatsWrapper.appname);
         totaltimeused.setText(String.valueOf(DateUtils.covertingtime(usageStatsWrapper.mUsageTime)));
@@ -45,6 +48,11 @@ public class UsageStatVH extends RecyclerView.ViewHolder {
                 appIcon.buildDrawingCache();
                 Bitmap image=appIcon.getDrawingCache();
                 Intent intent = new Intent(v.getContext(), appitemdisplay.class);
+                Pair [] pair=new Pair[1];
+                pair[0]=new Pair<View,String>(appIcon,"imagetransition");
+                ActivityOptions options=ActivityOptions.makeSceneTransitionAnimation(context,pair);
+
+
                 intent.putExtra(appitemdisplay.abc,usageStatsWrapper.appname);
                 intent.putExtra(appitemdisplay.usagetime1,String.valueOf(DateUtils.covertingtime(usageStatsWrapper.mUsageTime)));
                 intent.putExtra(appitemdisplay.pkname1,usageStatsWrapper.mPackageName);
@@ -52,7 +60,7 @@ public class UsageStatVH extends RecyclerView.ViewHolder {
                 Bundle extras=new Bundle();
                 extras.putParcelable("icon",image);
                 intent.putExtras(extras);
-                v.getContext().startActivity(intent);
+                v.getContext().startActivity(intent,options.toBundle());
                 //Toast.makeText(v.getContext(), "os version is: " + "hello", Toast.LENGTH_SHORT).show();
             }
         });

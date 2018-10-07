@@ -78,7 +78,7 @@ MainActivity extends AppCompatActivity implements UsageContract.View {
         dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.divider, getTheme()));
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        adapter = new UsageStatAdapter();
+        adapter = new UsageStatAdapter(this);
 
         recyclerView.setAdapter(adapter);
 
@@ -86,7 +86,6 @@ MainActivity extends AppCompatActivity implements UsageContract.View {
         button.setVisibility(VISIBLE);
         button.setOnClickListener(v -> openSettings());
         mSwitchText.setVisibility(View.GONE);
-        presenter = new UsagePresenter(this, this);
         newmethod();
     }
 
