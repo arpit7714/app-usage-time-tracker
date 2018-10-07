@@ -77,19 +77,20 @@ public class dbprovider {
             }
           return false;
     }
-    public List<AppItem1> getapp(){
+    public List<AppItem1> getapp(String name){
         Cursor cursor=null;
         List <AppItem1> items=new ArrayList<>();
         try{
-            String[] cols={
+            String[] projection={
                     dbcontract.appdata.APP_NAME,
                     dbcontract.appdata.APP_DURATION,
                     dbcontract.appdata._ID
             };
-          cursor = mdbhelper.getReadableDatabase().query(
-              dbcontract.appdata.TABLE_NAME,
-              cols,
-              null,null
+            //String selection=dbcontract.appdata.APP_NAME+"=?";
+            String [] args={name};
+            cursor = mdbhelper.getReadableDatabase().query(
+                    dbcontract.appdata.TABLE_NAME,
+              projection,dbcontract.appdata.APP_NAME+"=?",args
               ,null,
               null,
               null
@@ -97,8 +98,6 @@ public class dbprovider {
           while(cursor.moveToNext()){
               items.add(cursorToItem(cursor));
           }
-
-
         }
         finally {
             if(cursor!=null)

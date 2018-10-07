@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.quirodev.data.dbcontract;
 import com.quirodev.data.dbhelper;
 import com.quirodev.data.dbcontract.appdata;
 import com.quirodev.data.dbprovider;
@@ -35,9 +36,9 @@ public class appitemdisplay extends AppCompatActivity{
         setContentView(R.layout.app_display);
         obj=new dbprovider(getApplicationContext());
         Intent intent=getIntent();
-        displaydatabaseinfo();
         if (intent!=null){
             appname1=intent.getStringExtra(abc);
+            displaydatabaseinfo(appname1);
            // String pkname;
             pkname=intent.getStringExtra(pkname1);
             TextView appname=(TextView) findViewById(R.id.appname);
@@ -57,7 +58,7 @@ public class appitemdisplay extends AppCompatActivity{
             Bitmap bmp=(Bitmap) extras.getParcelable("icon");
             appicon.setImageBitmap(bmp);
         }
-        List<AppItem1> items=obj.getapp();
+        List<AppItem1> items=obj.getapp(appname1);
         for(AppItem1 item :items){
             Log.v("database",String.valueOf(items.size()));
             Log.v("database",item.appname+"usage time"+item.mUsageTime);
@@ -76,21 +77,37 @@ public class appitemdisplay extends AppCompatActivity{
             e.printStackTrace();
         }
     }
-    private void displaydatabaseinfo(){
+    private void displaydatabaseinfo(String name){
         dbhelper mdbhelper= new dbhelper(getApplicationContext());
         SQLiteDatabase db= mdbhelper.getReadableDatabase();
-        Cursor cursor=db.rawQuery("Select * from "+appdata.TABLE_NAME,null);
-        int appcolumnindex=cursor.getColumnIndex(appdata.APP_NAME);
-        int appduration=cursor.getColumnIndex(appdata.APP_DURATION);
-        TextView displayview=(TextView) findViewById(R.id.database);
-        displayview.setText("Number of rows in database table: " + cursor.getCount());
-        while(cursor.moveToNext()){
-            String appname=cursor.getString(appcolumnindex);
-            String duration=cursor.getString(appduration);
-            displayview.append("\n"+appname+"  "+duration+" ");
-        }
-        cursor.close();
+        //Cursor cursor=db.rawQuery("Select * from "+appdata.TABLE_NAME,null);
+        String[] projection={
+                dbcontract.appdata.APP_NAME,
+                dbcontract.appdata.APP_DURATION,
+                dbcontract.appdata._ID
+        };
+        //String selection=dbcontract.appdata.APP_NAME+"=?";
+        String [] args={name,};
 
+        Cursor cursor = db.query(
+                dbcontract.appdata.TABLE_NAME,
+                projection,dbcontract.appdata.APP_NAME+"=?",args
+                ,null,
+                null,
+                null
+        );
+        if (cursor!=null) {
+            int appcolumnindex = cursor.getColumnIndex(appdata.APP_NAME);
+            int appduration = cursor.getColumnIndex(appdata.APP_DURATION);
+            TextView displayview = (TextView) findViewById(R.id.database);
+            displayview.setText("Number of rows in database table: " + cursor.getCount());
+            while (cursor.moveToNext()) {
+                String appname = cursor.getString(appcolumnindex);
+                String duration = cursor.getString(appduration);
+                displayview.append("\n"+appname+"  "+duration+" ");
+            }
+            cursor.close();
+        }
     }
 
 }
