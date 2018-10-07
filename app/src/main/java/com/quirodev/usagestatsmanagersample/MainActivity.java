@@ -7,11 +7,14 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.location.SettingInjectorService;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.DimenRes;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -77,6 +80,9 @@ MainActivity extends AppCompatActivity implements UsageContract.View {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
         dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.divider, getTheme()));
         recyclerView.addItemDecoration(dividerItemDecoration);
+        //making the gap for the recyclerview item
+        ItemOffsetDecoration itemdecoration=new ItemOffsetDecoration(recyclerView.getContext(),R.dimen.activity_horizontal_margin);
+        recyclerView.addItemDecoration(itemdecoration);
 
         adapter = new UsageStatAdapter(this);
 
@@ -226,4 +232,24 @@ MainActivity extends AppCompatActivity implements UsageContract.View {
     }
 
 
+}
+//for making the gap in the recycler view item
+class ItemOffsetDecoration extends RecyclerView.ItemDecoration {
+
+    private int mItemOffset;
+
+    public ItemOffsetDecoration(int itemOffset) {
+        mItemOffset = itemOffset;
+    }
+
+    public ItemOffsetDecoration(@NonNull Context context, @DimenRes int itemOffsetId) {
+        this(context.getResources().getDimensionPixelSize(itemOffsetId));
+    }
+
+    @Override
+    public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
+                               RecyclerView.State state) {
+        super.getItemOffsets(outRect, view, parent, state);
+        outRect.set(mItemOffset, mItemOffset, mItemOffset, mItemOffset);
+    }
 }

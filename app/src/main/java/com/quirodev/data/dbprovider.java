@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.quirodev.usagestatsmanagersample.AppItem1;
+import com.quirodev.usagestatsmanagersample.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,38 +37,52 @@ public class dbprovider {
         Log.v("taking easy","yoiod");
     }
     public void insert(AppItem1 appitem){
-
-
-          ContentValues values=itemToContentValue(appitem);
-          mdbhelper.getWritableDatabase().insert(dbcontract.appdata.TABLE_NAME,null,values);
-
+        ContentValues values = itemToContentValue(appitem);
+          if(!exist(appitem)) {
+              mdbhelper.getWritableDatabase().insert(dbcontract.appdata.TABLE_NAME, null, values);
+          }
+          else {
+              String []args={appitem.appname};
+              mdbhelper.getWritableDatabase().update(dbcontract.appdata.TABLE_NAME,values,
+                      dbcontract.appdata.APP_NAME + "=?",args
+                      );
+          }
     }
     private ContentValues itemToContentValue(AppItem1 item) {
         ContentValues values = new ContentValues();
         values.put(dbcontract.appdata.APP_NAME,item.appname);
-        values.put(dbcontract.appdata.APP_DURATION,item.mUsageTime);
+        values.put(dbcontract.appdata.APP_DURATION,String.valueOf(DateUtils.covertingtime(item.mUsageTime)));
         return values;
     }
 
 
-    public boolean exist(AppItem1 appitem){
+    public boolean exist(AppItem1 appitem) {
         //SQLiteDatabase database = mdbhelper.getWritableDatabase();
-        Cursor cursor=null;
-        try{
-            String[] cols={
+        Cursor cursor = null;
+            String[] projection = {
                     dbcontract.appdata.APP_NAME,
                     dbcontract.appdata.APP_DURATION,
                     dbcontract.appdata._ID
             };
-            cursor = mdbhelper.getWritableDatabase().query(
+            String[] args = {appitem.appname};
+            cursor = mdbhelper.getReadableDatabase().query(
                     dbcontract.appdata.TABLE_NAME,
-                    cols,
-                    null,null
-                    ,null,
+                    projection, dbcontract.appdata.APP_NAME + "=?",
+                    args
+                    , null,
                     null,
                     null
             );
-            if (cursor.moveToNext()) {
+            if (cursor != null && cursor.getCount() > 0) {
+                cursor.close();
+                return true;
+            } else {
+                cursor.close();
+                return false;
+            }
+
+
+           /* if (cursor.moveToNext()) {
                 int id = cursor.getInt(cursor.getColumnIndex(dbcontract.appdata._ID));
                 return id > 0;
             }
@@ -75,7 +90,7 @@ public class dbprovider {
             if (cursor!=null)
                 cursor.close();
             }
-          return false;
+          return false;*/
     }
     public List<AppItem1> getapp(String name){
         Cursor cursor=null;

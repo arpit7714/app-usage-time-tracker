@@ -11,6 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/fragment1"
+        android:clipToPadding="false"
+        android:padding="@dimen/activity_horizontal_margin"
         />
     <TextView
         android:id="@+id/enable_text"
