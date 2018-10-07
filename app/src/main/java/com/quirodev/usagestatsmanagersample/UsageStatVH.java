@@ -48,8 +48,13 @@ public class UsageStatVH extends RecyclerView.ViewHolder {
                 appIcon.buildDrawingCache();
                 Bitmap image=appIcon.getDrawingCache();
                 Intent intent = new Intent(v.getContext(), appitemdisplay.class);
-                Pair [] pair=new Pair[1];
+
+                //pair for the transition effect of the image and the name
+                Pair [] pair=new Pair[2];
+                //image pair
                 pair[0]=new Pair<View,String>(appIcon,"imagetransition");
+                //app name pair
+                pair[1]=new Pair<View,String>(appName,"nametransition");
                 ActivityOptions options=ActivityOptions.makeSceneTransitionAnimation(context,pair);
 
 

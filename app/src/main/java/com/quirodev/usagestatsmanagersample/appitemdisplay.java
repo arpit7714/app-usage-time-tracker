@@ -104,7 +104,7 @@ public class appitemdisplay extends AppCompatActivity{
             while (cursor.moveToNext()) {
                 String appname = cursor.getString(appcolumnindex);
                 String duration = cursor.getString(appduration);
-                displayview.append("\n"+appname+"  "+duration+" ");
+                //displayview.append("\n"+appname+"  "+duration+" ");
             }
             cursor.close();
         }
