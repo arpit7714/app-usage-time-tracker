@@ -24,7 +24,7 @@ public class AppItem1 {
     public String toString() {
         return String.format(Locale.getDefault(),
                 "name:%s package_name:%s time:%d total:%d type:%d system:%b count:%d lasttime:%d",
-                appname, mPackageName, mEventTime, mUsageTime, mEventType, mCount,mLastTimeUsed);
+                appname, mPackageName,mEventTime, mUsageTime, mEventType, mCount,mLastTimeUsed);
     }
 
     public AppItem1 copy() {

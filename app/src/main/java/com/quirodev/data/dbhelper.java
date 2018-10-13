@@ -19,9 +19,10 @@ public class dbhelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String SQL_CREATE_APP_HISTORY_TABLE=
-                "CREATE TABLE "+dbcontract.appdata.TABLE_NAME+" ("
-                +dbcontract.appdata._ID+" INTEGER PRIMARY KEY,"+
-                dbcontract.appdata.APP_NAME+" TEXT,"+
+                "CREATE TABLE "+dbcontract.appdata.TABLE_NAME + " ("
+                +dbcontract.appdata._AL +" TEXT,"
+                + dbcontract.appdata._ID+" INTEGER PRIMARY KEY,"+
+                dbcontract.appdata.APP_NAME+" TEXT," +
                 dbcontract.appdata.APP_DURATION+" INTEGER)";
 
         //it opens a connection to the database and creates a

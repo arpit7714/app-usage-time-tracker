@@ -13,7 +13,10 @@ import android.util.Log;
 import com.quirodev.usagestatsmanagersample.AppItem1;
 import com.quirodev.usagestatsmanagersample.DateUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class dbprovider {
@@ -22,6 +25,11 @@ public class dbprovider {
     private static dbprovider instance;
 
 
+    //to get the current date and save into the database
+    Date c = Calendar.getInstance().getTime();
+    //System.out.println("Current time => " + c);
+    SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+    String formattedDate = df.format(c);
     //we make the instance of the sqllitehllper class to
     //get the instance of the database and use mthod like
     //getwritabledatabase() and getreadabledatabase()
@@ -51,6 +59,8 @@ public class dbprovider {
     private ContentValues itemToContentValue(AppItem1 item) {
         ContentValues values = new ContentValues();
         values.put(dbcontract.appdata.APP_NAME,item.appname);
+        Log.v("date",formattedDate);
+        values.put(dbcontract.appdata._AL,formattedDate);
         values.put(dbcontract.appdata.APP_DURATION,String.valueOf(DateUtils.covertingtime(item.mUsageTime)));
         return values;
     }
@@ -61,13 +71,15 @@ public class dbprovider {
         Cursor cursor = null;
             String[] projection = {
                     dbcontract.appdata.APP_NAME,
+                    dbcontract.appdata._AL,
                     dbcontract.appdata.APP_DURATION,
                     dbcontract.appdata._ID
             };
-            String[] args = {appitem.appname};
+            String[] args = {appitem.appname,formattedDate};
+            String selection=dbcontract.appdata.APP_NAME+"=?"+" AND "+dbcontract.appdata._AL+"=?";
             cursor = mdbhelper.getReadableDatabase().query(
                     dbcontract.appdata.TABLE_NAME,
-                    projection, dbcontract.appdata.APP_NAME + "=?",
+                    projection, selection,
                     args
                     , null,
                     null,
@@ -99,6 +111,7 @@ public class dbprovider {
             String[] projection={
                     dbcontract.appdata.APP_NAME,
                     dbcontract.appdata.APP_DURATION,
+                    dbcontract.appdata._AL,
                     dbcontract.appdata._ID
             };
             //String selection=dbcontract.appdata.APP_NAME+"=?";

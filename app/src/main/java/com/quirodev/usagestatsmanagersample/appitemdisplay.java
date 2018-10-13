@@ -83,6 +83,7 @@ public class appitemdisplay extends AppCompatActivity{
         //Cursor cursor=db.rawQuery("Select * from "+appdata.TABLE_NAME,null);
         String[] projection={
                 dbcontract.appdata.APP_NAME,
+                appdata._AL,
                 dbcontract.appdata.APP_DURATION,
                 dbcontract.appdata._ID
         };
@@ -99,12 +100,14 @@ public class appitemdisplay extends AppCompatActivity{
         if (cursor!=null) {
             int appcolumnindex = cursor.getColumnIndex(appdata.APP_NAME);
             int appduration = cursor.getColumnIndex(appdata.APP_DURATION);
+            int date=cursor.getColumnIndex(appdata._AL);
             TextView displayview = (TextView) findViewById(R.id.database);
             displayview.setText("Number of rows in database table: " + cursor.getCount());
             while (cursor.moveToNext()) {
                 String appname = cursor.getString(appcolumnindex);
                 String duration = cursor.getString(appduration);
-                displayview.append("\n"+appname+"  "+duration+" ");
+                String datecol=cursor.getString(date);
+                displayview.append("\n"+appname+"  "+duration+" "+datecol+"\n");
             }
             cursor.close();
         }

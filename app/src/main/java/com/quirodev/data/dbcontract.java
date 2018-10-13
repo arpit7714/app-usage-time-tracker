@@ -11,6 +11,7 @@ import android.provider.BaseColumns;
       public static final class appdata implements BaseColumns{
         //name of the table
         public static final String TABLE_NAME="usagetable";
+        public static final String _AL="date";
         public static final String APP_NAME="appname";
         public  static final String APP_DURATION="duraion";
         public static final String _ID=BaseColumns._ID;
